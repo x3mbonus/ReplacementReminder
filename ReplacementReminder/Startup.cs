@@ -1,19 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using ReplacementReminder.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ReplacementReminder.Abstract;
-using ReplacementReminder.Repository;
+using AutoMapper;
+using ReplacementReminder.Mapping;
+using ReplacementReminder.Repository.Abstract;
+using ReplacementReminder.Repository.EntityFramework;
+using ReplacementReminder.Services.Impl;
+using ReplacementReminder.Services.Abstract;
 
 namespace ReplacementReminder
 {
@@ -33,7 +31,15 @@ namespace ReplacementReminder
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+            //Repository
             services.AddScoped<IReplacementItemsRepository, ReplacementItemsRepository>();
+
+            //AppServices
+            services.AddScoped<IReplacementItemsService, ReplacementItemsService>();
+
+            //Core
+            services.AddAutoMapper(typeof(MapperConfig));
+
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

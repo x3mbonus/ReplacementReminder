@@ -9,6 +9,7 @@ namespace ReplacementReminder.Models
         [Required]
         public string Name { get; set; }
 
+        [Display(Name = "Replacement period (days)")]
         public int TimeToExpire { get; set; }
     }
 }

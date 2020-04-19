@@ -1,6 +1,6 @@
 ﻿using ReplacementReminder.Data;
 
-namespace ReplacementReminder.Abstract
+namespace ReplacementReminder.Repository.Abstract
 {
     interface IReplacementHistoryRepository : IRepositoryBase<ReplacementHistoryEntry>
     {
