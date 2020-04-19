@@ -7,9 +7,11 @@
 <h1>Replacement items</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">
+        <i class="fa fa-plus" aria-hidden="true"></i> Create New
+    </a>
 </p>
-<table class="table">
+<table class="table ui-date-table">
     <thead>
         <tr>
             <th>
@@ -31,9 +33,16 @@
                 @Html.DisplayFor(modelItem => item.TimeToExpire)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"
+                   onclick="return confirm('Are you sure that you want to delete item?')">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
             </td>
         </tr>
 }

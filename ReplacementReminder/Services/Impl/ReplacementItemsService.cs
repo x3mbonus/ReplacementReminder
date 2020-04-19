@@ -55,5 +55,16 @@ namespace ReplacementReminder.Services.Impl
 
            return _replacementItemsRepository.Update(item);
         }
+
+        public bool Delete(int id)
+        {
+            var item = _replacementItemsRepository.FindById(id);
+            if (item == null)
+            {
+                throw new ItemNotFoundException();
+            }
+
+            return _replacementItemsRepository.Delete(item);
+        }
     }
 }

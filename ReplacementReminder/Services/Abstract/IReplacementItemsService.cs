@@ -9,5 +9,6 @@ namespace ReplacementReminder.Services.Abstract
         ReplacementItemModel FindById(int id);
         bool Create(ReplacementItemModel model);
         bool Update(int id, ReplacementItemModel model);
+        bool Delete(int id);
     }
 }

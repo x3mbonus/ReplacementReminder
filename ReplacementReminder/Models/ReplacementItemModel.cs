@@ -10,6 +10,6 @@ namespace ReplacementReminder.Models
         public string Name { get; set; }
 
         [Display(Name = "Replacement period (days)")]
-        public int TimeToExpire { get; set; }
+        public int? TimeToExpire { get; set; }
     }
 }

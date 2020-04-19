@@ -31,7 +31,12 @@ namespace ReplacementReminder.Controllers
         // GET: ReplacementItems/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var model = _replacementItemsService.FindById(id);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return View(model);
         }
 
         // GET: ReplacementItems/Create
@@ -49,13 +54,13 @@ namespace ReplacementReminder.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return View();
+                    return View(model);
                 }
 
                 if (!_replacementItemsService.Create(model))
                 {
-                    ModelState.AddModelError("", "Cannot create replacement item");
-                    return View();
+                    ModelState.AddModelError("", "Cannot create item");
+                    return View(model);
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -63,7 +68,7 @@ namespace ReplacementReminder.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", $"Something went wrong: {ex.Message}");
-                return View();
+                return View(model);
             }
         }
 
@@ -93,8 +98,8 @@ namespace ReplacementReminder.Controllers
 
                 if (!_replacementItemsService.Update(id, model))
                 {
-                    ModelState.AddModelError("", "Cannot update replacement item");
-                    return View();
+                    ModelState.AddModelError("", "Cannot update item");
+                    return View(model);
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -106,31 +111,46 @@ namespace ReplacementReminder.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", $"Something went wrong: {ex.Message}");
-                return View();
+                return View(model);
             }
         }
 
         // GET: ReplacementItems/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: ReplacementItems/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                if (!_replacementItemsService.Delete(id))
+                {
+                    ModelState.AddModelError("", "Cannot delete item");                    
+                }
             }
-            catch
+            catch (ItemNotFoundException)
             {
-                return View();
+                return NotFound(id);
             }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Something went wrong: {ex.Message}");
+            }
+            return RedirectToAction(nameof(Index));
         }
+
+        //// POST: ReplacementItems/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add delete logic here
+
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
